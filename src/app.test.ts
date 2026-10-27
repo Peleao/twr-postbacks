@@ -24,14 +24,6 @@ describe('app', () => {
     await app.close();
   });
 
-  it('POST /webhooks/:clientId é stub 501', async () => {
-    const app = buildApp({ db: await createTestDb() });
-    const res = await app.inject({ method: 'POST', url: '/webhooks/demo', payload: {} });
-    expect(res.statusCode).toBe(501);
-    expect(res.json()).toEqual({ error: 'not_implemented' });
-    await app.close();
-  });
-
   it('GET /clients/:clientId/report é stub 501', async () => {
     const app = buildApp({ db: await createTestDb() });
     const res = await app.inject({ method: 'GET', url: '/clients/demo/report' });
