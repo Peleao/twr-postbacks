@@ -16,6 +16,12 @@ describe('loadConfig', () => {
     expect(loadConfig({ DATABASE_URL: 'postgres://x', PORT: '8080' }).PORT).toBe(8080);
   });
 
+  it('as variáveis DEMO_* são opcionais', () => {
+    const c = loadConfig({ DATABASE_URL: 'postgres://x' });
+    expect(c.DEMO_CLIENT_ID).toBeUndefined();
+    expect(c.DEMO_READ_TOKEN).toBeUndefined();
+  });
+
   it('lança com PORT inválida', () => {
     expect(() => loadConfig({ DATABASE_URL: 'postgres://x', PORT: 'abc' })).toThrow(/PORT/);
   });
