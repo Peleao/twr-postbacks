@@ -10,8 +10,8 @@ Prazo de entrega: terça 27/10/2026, 23:59 (e-mail para vagas@twrplay.com, envia
 ## A fazer (nesta ordem)
 - **POST** — Ingestão de webhooks · change: docs/changes/POST-ingestao.md · próximo: abrir sessão após merge da BASE (paralela à REL)
 - **REL** — Relatório de vendas · change: docs/changes/REL-relatorio.md · próximo: abrir sessão após merge da BASE (paralela à POST)
-- **DEPLOY** — Publicação e README · change: docs/changes/DEPLOY-publicacao.md · próximo: infra logo após a BASE; README e smoke após POST e REL
+- **DEPLOY** — Publicação e README · change: docs/changes/DEPLOY-publicacao.md · próximo: primeiro deploy logo após a BASE; README e smoke após POST e REL
 ## Esperando a pessoa
-- **CONTA** — Conta no Railway · próximo: a pessoa cria a conta e o projeto com Postgres
 ## Em produção
+- **INFRA** — Azure (Railway com cadastro fechado): App Service B1 + Postgres B1ms em East US 2 · URL: https://twr-postbacks-peleao.azurewebsites.net
 ## Fora do quadro
