@@ -1,17 +1,14 @@
 # Quadro — Receptor de Postbacks (desafio TWR)
 
-Prazo de entrega: terça 27/10/2026, 23:59 (e-mail para vagas@twrplay.com, enviado pela pessoa).
+github-project: Peleao/2
 
-## Fazendo
-- **POST** — Ingestão de webhooks · change: docs/changes/POST-ingestao.md · próximo: implementar e abrir PR · sessão: local_0f3afe8b-9c88-4b76-9629-bdc65e21d33a
-- **REL** — Relatório de vendas · change: docs/changes/REL-relatorio.md · próximo: implementar e abrir PR · sessão: local_ffb8245f-26c5-4eb3-bd02-567a35d15534
-## Explorando
-## Na QA
-## Subindo
-## A fazer (nesta ordem)
-- **DEPLOY** — Publicação e README · change: docs/changes/DEPLOY-publicacao.md · próximo: primeiro deploy logo após a BASE; README e smoke após POST e REL
-## Esperando a pessoa
-## Em produção
-- **BASE** — Esqueleto do serviço · PR #1 mergeado (1ecc120)
-- **INFRA** — Azure (Railway com cadastro fechado): App Service B1 + Postgres B1ms em East US 2 · URL: https://twr-postbacks-peleao.azurewebsites.net
-## Fora do quadro
+O quadro de verdade é o GitHub Project https://github.com/users/Peleao/projects/2 (cartão = issue de Peleao/twr-postbacks).
+
+IDs dos campos (para `gh project item-edit`):
+- project-id: PVT_kwHOBcS4gc4BpCT9
+- Status: PVTSSF_lAHOBcS4gc4BpCT9zhnfsrY
+  - Fazendo bacb6ca9 · Explorando 3bb06d4b · Na QA 6bfb0adc · Subindo 68156607
+  - A fazer (nesta ordem) 6617cae8 · Esperando a pessoa 704b0bd1 · Em produção 7745c43e · Fora do quadro 076ff88e
+- Próximo passo: PVTF_lAHOBcS4gc4BpCT9zhnfs0M
+
+Prazo de entrega: terça 27/10/2026, 23:59 (e-mail para vagas@twrplay.com, enviado pela pessoa).
