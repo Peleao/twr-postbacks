@@ -32,7 +32,7 @@ curl -i -X POST "$BASE/webhooks/demo" \
 
 A resposta é `{"status":"processed"}`. Rodando o mesmo comando de novo, a resposta é `{"status":"duplicate"}` e a venda não conta duas vezes. Para mandar o reembolso dessa venda, troque `event_id` por `evt_readme_2`, `event_type` por `sale.refunded` e `occurred_at` por um horário mais novo.
 
-O mesmo envio pelo script do repositório, que monta o evento e assina:
+O mesmo envio pelo script do repositório, que monta o evento e assina (rode `npm install` antes):
 
 ```bash
 npm run send-sample -- --url https://twr-postbacks-peleao.azurewebsites.net --client demo --secret twr-demo-secret --type sale.approved --sale ord_42
@@ -129,7 +129,7 @@ npm run typecheck
 
 - Azure App Service Linux (Node 22, plano B1, Always On, só HTTPS) e Azure Database for PostgreSQL Flexible Server (B1ms, TLS obrigatório).
 - Deploy por zip do `main` (`az webapp deploy`). O build roda no próprio App Service.
-- As migrações rodam na subida do app, e o cliente `demo` é criado a partir de variáveis de ambiente, se ainda não existir.
+- As migrações rodam na subida do app. O cliente `demo` é criado a partir de `DEMO_CLIENT_ID`, `DEMO_CLIENT_NAME`, `DEMO_WEBHOOK_SECRET` e `DEMO_READ_TOKEN` (ver `.env.example`), se ainda não existir.
 
 ## Como o trabalho foi feito
 
