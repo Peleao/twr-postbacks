@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { checkReadToken } from '../clients.js';
 import type { Db } from '../db.js';
+import { buildReport } from '../report/build.js';
 import { parseReportQuery } from '../report/query.js';
 
 export async function reportRoutes(app: FastifyInstance, opts: { db: Db }): Promise<void> {
@@ -17,7 +18,6 @@ export async function reportRoutes(app: FastifyInstance, opts: { db: Db }): Prom
     const filters = parseReportQuery(req.query);
     if (!filters) return reply.code(400).send({ error: 'invalid_query' });
 
-    // corpo provisório; o pacote 2 completa com o relatório
-    return reply.send({ client_id: clientId, filters });
+    return reply.send(await buildReport(opts.db, clientId, filters));
   });
 }

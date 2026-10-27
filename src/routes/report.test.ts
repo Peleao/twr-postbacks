@@ -58,10 +58,12 @@ describe('GET /clients/:clientId/report', () => {
       headers: bearer(a.readToken),
     });
     expect(res.statusCode).toBe(200);
-    expect(res.json()).toEqual({
-      client_id: 'a',
-      filters: { from: null, to: null, platform: null },
-    });
+    const body = res.json();
+    expect(Object.keys(body)).toEqual(['client_id', 'filters', 'generated_at', 'currencies']);
+    expect(body.client_id).toBe('a');
+    expect(body.filters).toEqual({ from: null, to: null, platform: null });
+    expect(typeof body.generated_at).toBe('string');
+    expect(body.currencies).toEqual([]);
     await app.close();
   });
 });
