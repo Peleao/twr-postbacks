@@ -7,7 +7,7 @@ Fixados no planejamento. Mudar qualquer item aqui exige avisar a coordenadora an
 - Node 22 LTS, TypeScript (strict), ESM.
 - Fastify 5, zod para validação, `pg` em produção.
 - Testes: vitest + `@electric-sql/pglite` (Postgres real em WASM, sem Docker).
-- Produção: Azure App Service (Linux, Node 22) + Azure Postgres Flexible, East US 2. Servidor escuta em `0.0.0.0:$PORT`.
+- Produção: Azure App Service (Linux, Node 22) + Azure Postgres Flexible (app em East US 2, banco em North Central US). Servidor escuta em `0.0.0.0:$PORT`.
 - Valores sempre em **centavos inteiros**. Datas em ISO 8601 UTC.
 
 ## Banco (migração `migrations/001_init.sql`)

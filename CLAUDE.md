@@ -13,7 +13,7 @@ npm run build --silent                   # build
 
 ## Produção
 
-Azure, grupo `rg-twr-postbacks` (East US 2): App Service `twr-postbacks-peleao` e Postgres `psql-twr-postbacks-peleao`. URL: https://twr-postbacks-peleao.azurewebsites.net. A `DATABASE_URL` mora só nas configurações do App Service.
+Azure, grupo `rg-twr-postbacks`: App Service `twr-postbacks-peleao` (East US 2) e Postgres `psql-twr-postbacks-peleao` (North Central US). Deploy: `git archive --format=zip origin/main` + `az webapp deploy --type zip --track-status false`. URL: https://twr-postbacks-peleao.azurewebsites.net. A `DATABASE_URL` mora só nas configurações do App Service.
 
 ## Regras do projeto
 
