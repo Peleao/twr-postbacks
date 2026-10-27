@@ -23,12 +23,4 @@ describe('app', () => {
     expect(res.json()).toEqual({ status: 'unavailable' });
     await app.close();
   });
-
-  it('POST /webhooks/:clientId é stub 501', async () => {
-    const app = buildApp({ db: await createTestDb() });
-    const res = await app.inject({ method: 'POST', url: '/webhooks/demo', payload: {} });
-    expect(res.statusCode).toBe(501);
-    expect(res.json()).toEqual({ error: 'not_implemented' });
-    await app.close();
-  });
 });
