@@ -34,6 +34,41 @@ export function postWebhook(
   return app.inject({ method: 'POST', url: `/webhooks/${clientId}`, headers, payload: raw });
 }
 
+describe('POST /webhooks/:clientId validação', () => {
+  async function post(raw: string, opts: { secret?: string } = {}) {
+    const db = await createTestDb();
+    await seedClient(db);
+    const app = buildApp({ db });
+    const res = await postWebhook(app, 'demo', raw, opts);
+    await app.close();
+    return res;
+  }
+
+  it('JSON inválido responde 400 com details', async () => {
+    const res = await post('{oi');
+    expect(res.statusCode).toBe(400);
+    expect(res.json()).toEqual({ error: 'invalid_payload', details: [{ path: '', message: 'invalid json' }] });
+  });
+
+  it('amount_cents negativo responde 400 com o path', async () => {
+    const e = validEvent();
+    const res = await post(JSON.stringify({ ...e, sale: { ...(e.sale as object), amount_cents: -1 } }));
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error).toBe('invalid_payload');
+    expect(res.json().details.map((d: { path: string }) => d.path)).toContain('sale.amount_cents');
+  });
+
+  it('event_type desconhecido responde 400', async () => {
+    const res = await post(JSON.stringify(validEvent({ event_type: 'sale.paid' })));
+    expect(res.statusCode).toBe(400);
+  });
+
+  it('corpo inválido com assinatura errada responde 401', async () => {
+    const res = await post('{oi', { secret: 'outro' });
+    expect(res.statusCode).toBe(401);
+  });
+});
+
 describe('POST /webhooks/:clientId', () => {
   it('assinatura válida responde 200 processed', async () => {
     const db = await createTestDb();
@@ -49,7 +84,7 @@ describe('POST /webhooks/:clientId', () => {
     const db = await createTestDb();
     await seedClient(db);
     const app = buildApp({ db });
-    const raw = JSON.stringify(validEvent(), null, 4).replace(/:/g, ' :  ');
+    const raw = JSON.stringify(validEvent(), null, 4).replace(/":/g, '" :  ');
     const res = await postWebhook(app, 'demo', raw);
     expect(res.statusCode).toBe(200);
     await app.close();

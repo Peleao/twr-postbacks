@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { findClient } from '../clients.js';
 import type { Db } from '../db.js';
+import { parseEvent } from '../webhooks/schema.js';
 import { verifySignature } from '../webhooks/signature.js';
 
 const BODY_LIMIT = 64 * 1024;
@@ -28,7 +29,9 @@ export async function webhookRoutes(app: FastifyInstance, opts: { db: Db }): Pro
       if (!client || !verifySignature(raw, req.headers['x-twr-signature'] as string | undefined, client.webhookSecret)) {
         return reply.code(401).send({ error: 'invalid_signature' });
       }
-      // pacote 2: validar o corpo; pacote 3: gravar a venda
+      const parsed = parseEvent(raw);
+      if (!parsed.ok) return reply.code(400).send({ error: 'invalid_payload', details: parsed.details });
+      // pacote 3: gravar a venda (parsed.event) aqui
       return reply.code(200).send({ status: 'processed' });
     },
   );
