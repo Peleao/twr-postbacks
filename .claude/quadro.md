@@ -1,17 +1,14 @@
 # Quadro — Receptor de Postbacks (desafio TWR)
 
-Prazo de entrega: terça 27/10/2026, 23:59 (e-mail para vagas@twrplay.com, enviado pela pessoa).
+github-project: Peleao/2
 
-## Fazendo
-## Explorando
-## Na QA
-## Subindo
-## A fazer (nesta ordem)
-- **BASE** — Esqueleto do serviço · change: docs/changes/BASE-esqueleto.md · próximo: instalar Node 22, criar o repositório e abrir a sessão da change
-- **POST** — Ingestão de webhooks · change: docs/changes/POST-ingestao.md · próximo: abrir sessão após merge da BASE (paralela à REL)
-- **REL** — Relatório de vendas · change: docs/changes/REL-relatorio.md · próximo: abrir sessão após merge da BASE (paralela à POST)
-- **DEPLOY** — Publicação e README · change: docs/changes/DEPLOY-publicacao.md · próximo: infra logo após a BASE; README e smoke após POST e REL
-## Esperando a pessoa
-- **CONTA** — Conta no Railway · próximo: a pessoa cria a conta e o projeto com Postgres
-## Em produção
-## Fora do quadro
+O quadro de verdade é o GitHub Project https://github.com/users/Peleao/projects/2 (cartão = issue de Peleao/twr-postbacks).
+
+IDs dos campos (para `gh project item-edit`):
+- project-id: PVT_kwHOBcS4gc4BpCT9
+- Status: PVTSSF_lAHOBcS4gc4BpCT9zhnfsrY
+  - Fazendo bacb6ca9 · Explorando 3bb06d4b · Na QA 6bfb0adc · Subindo 68156607
+  - A fazer (nesta ordem) 6617cae8 · Esperando a pessoa 704b0bd1 · Em produção 7745c43e · Fora do quadro 076ff88e
+- Próximo passo: PVTF_lAHOBcS4gc4BpCT9zhnfs0M
+
+Prazo de entrega: terça 27/10/2026, 23:59 (e-mail para vagas@twrplay.com, enviado pela pessoa).

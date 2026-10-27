@@ -11,6 +11,10 @@ npx tsc --noEmit                         # tipos
 npm run build --silent                   # build
 ```
 
+## Produção
+
+Azure, grupo `rg-twr-postbacks`: App Service `twr-postbacks-peleao` (East US 2) e Postgres `psql-twr-postbacks-peleao` (North Central US). Deploy: `git archive --format=zip origin/main` + `az webapp deploy --type zip --track-status false`. URL: https://twr-postbacks-peleao.azurewebsites.net. A `DATABASE_URL` mora só nas configurações do App Service.
+
 ## Regras do projeto
 
 - Valores em centavos inteiros; datas em UTC.
