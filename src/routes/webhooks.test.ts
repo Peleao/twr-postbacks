@@ -69,6 +69,53 @@ describe('POST /webhooks/:clientId validação', () => {
   });
 });
 
+describe('POST /webhooks/:clientId gravação', () => {
+  async function setup() {
+    const db = await createTestDb();
+    await seedClient(db);
+    return { db, app: buildApp({ db }) };
+  }
+
+  it('processa, reenvio é duplicate e evento antigo é applied:false', async () => {
+    const { app } = await setup();
+    const raw = JSON.stringify(validEvent({ event_type: 'sale.refunded', occurred_at: '2026-10-27T14:10:00Z' }));
+    const a = await postWebhook(app, 'demo', raw);
+    expect(a.statusCode).toBe(200);
+    expect(a.json()).toEqual({ status: 'processed' });
+    const b = await postWebhook(app, 'demo', raw);
+    expect(b.statusCode).toBe(200);
+    expect(b.json()).toEqual({ status: 'duplicate' });
+    const c = await postWebhook(app, 'demo', JSON.stringify(validEvent({ event_id: 'evt_0' })));
+    expect(c.statusCode).toBe(200);
+    expect(c.json()).toEqual({ status: 'processed', applied: false });
+    await app.close();
+  });
+
+  it('20 envios simultâneos do mesmo evento: 1 processed e 19 duplicate', async () => {
+    const { db, app } = await setup();
+    const raw = JSON.stringify(validEvent());
+    const res = await Promise.all(Array.from({ length: 20 }, () => postWebhook(app, 'demo', raw)));
+    expect(res.every((r) => r.statusCode === 200)).toBe(true);
+    const status = res.map((r) => r.json().status);
+    expect(status.filter((s) => s === 'processed')).toHaveLength(1);
+    expect(status.filter((s) => s === 'duplicate')).toHaveLength(19);
+    const ev = await db.query<{ n: number }>('select count(*) as n from webhook_events');
+    const sa = await db.query<{ n: number }>('select count(*) as n from sales');
+    expect(ev.rows[0].n).toBe(1);
+    expect(sa.rows[0].n).toBe(1);
+    await app.close();
+  });
+
+  it('transação que falha responde 500 internal_error', async () => {
+    const { db } = await setup();
+    const app = buildApp({ db: { query: db.query, transaction: () => Promise.reject(new Error('x')) } });
+    const res = await postWebhook(app, 'demo', JSON.stringify(validEvent()));
+    expect(res.statusCode).toBe(500);
+    expect(res.json()).toEqual({ error: 'internal_error' });
+    await app.close();
+  });
+});
+
 describe('POST /webhooks/:clientId', () => {
   it('assinatura válida responde 200 processed', async () => {
     const db = await createTestDb();

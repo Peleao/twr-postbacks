@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { findClient } from '../clients.js';
 import type { Db } from '../db.js';
+import { ingestEvent } from '../webhooks/ingest.js';
 import { parseEvent } from '../webhooks/schema.js';
 import { verifySignature } from '../webhooks/signature.js';
 
@@ -31,7 +32,9 @@ export async function webhookRoutes(app: FastifyInstance, opts: { db: Db }): Pro
       }
       const parsed = parseEvent(raw);
       if (!parsed.ok) return reply.code(400).send({ error: 'invalid_payload', details: parsed.details });
-      // pacote 3: gravar a venda (parsed.event) aqui
+      const result = await ingestEvent(opts.db, client.id, parsed.event);
+      if (result === 'duplicate') return reply.code(200).send({ status: 'duplicate' });
+      if (result === 'stale') return reply.code(200).send({ status: 'processed', applied: false });
       return reply.code(200).send({ status: 'processed' });
     },
   );
