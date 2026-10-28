@@ -12,6 +12,21 @@ describe('app', () => {
     await app.close();
   });
 
+  it('GET / descreve o serviço e as rotas', async () => {
+    const app = buildApp({ db: await createTestDb() });
+    const res = await app.inject({ method: 'GET', url: '/' });
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toMatchObject({
+      service: 'twr-postbacks',
+      routes: {
+        webhook: 'POST /webhooks/:clientId',
+        report: 'GET /clients/:clientId/report',
+        health: 'GET /health',
+      },
+    });
+    await app.close();
+  });
+
   it('GET /health responde 503 quando o banco falha', async () => {
     const db: Db = {
       query: () => Promise.reject(new Error('down')),

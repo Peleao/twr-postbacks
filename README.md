@@ -50,7 +50,7 @@ Filtros opcionais: `from` e `to` (`YYYY-MM-DD`, inclusivos, em **UTC**, aplicado
 - `net_revenue_cents`, a soma das vendas cujo status atual é `approved`;
 - a lista de produtos, ordenada pela receita.
 
-Também existe `GET /health`, que confere o banco.
+Também existem `GET /`, que descreve o serviço e as rotas, e `GET /health`, que confere o banco.
 
 ### Respostas do POST
 
