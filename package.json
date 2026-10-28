@@ -12,7 +12,8 @@
     "start": "node dist/src/server.js",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "client:create": "tsx scripts/create-client.ts"
+    "client:create": "tsx scripts/create-client.ts",
+    "send-sample": "tsx scripts/send-sample.ts"
   },
   "dependencies": {
     "@types/node": "^22.20.5",
